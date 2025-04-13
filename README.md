@@ -1,5 +1,5 @@
 ### EX4 Implementation of Cluster and Visitor Segmentation for Navigation patterns
-### DATE: 
+### DATE: 12/04/2025 
 ### AIM: To implement Cluster and Visitor Segmentation for Navigation patterns in Python.
 ### Description:
 <div align= "justify">Cluster visitor segmentation refers to the process of grouping or categorizing visitors to a website, 
@@ -14,27 +14,37 @@
 4) Visualize the result using matplotlib.
 
 ### Program:
-```python
-# Visitor segmentation based on characteristics
-# read the data
-/*WRITE YOUR CODE HERE
-
-# Perform segmentation based on characteristics (e.g., age groups)
-/*WRITE YOUR CODE HERE
 
 ```
-### Output:
+import pandas as pd
+import matplotlib.pyplot as plt
 
-### Visualization:
-```python
-# Create a list to store counts of visitors in each age group
-/*WRITE YOUR CODE HERE
+# 1. Read the data from a CSV file
+file_path = 'clustervisitor.csv'  
+try:
+    data = pd.read_csv(file_path)  
+except FileNotFoundError:
+    print(f"Error: File not found at '{file_path}'. Please check the file path.")
+    exit()
 
-# Count visitors in each age group
-/*WRITE YOUR CODE HERE
-    
-# Define age group labels and plot a bar chart
-/*WRITE YOUR CODE HERE
+# 2. Define Age Groups
+age_groups = {
+    'Young': (data['Age'] <= 35),  # Young: 35 and below
+    'Middle': (data['Age'] > 30) & (data['Age'] <= 50),  # Middle: 36 to 55
+    'Elder': (data['Age'] > 50)  # Elder: Above 55
+}
+
+# 3. Segment Visitors based on Age Groups
+data['Age Group'] = 'Unknown'
+for group, condition in age_groups.items():
+    data.loc[condition, 'Age Group'] = group
+
+# 4. Create a list to store counts of visitors in each age group
+age_group_counts = data['Age Group'].value_counts()
+
+# 5. Visualize the result
+age_group_labels = age_group_counts.index
+visitor_counts = age_group_counts.values
 
 plt.figure(figsize=(8, 6))
 plt.bar(age_group_labels, visitor_counts, color='skyblue')
@@ -45,5 +55,7 @@ plt.show()
 ```
 ### Output:
 
+![Screenshot 2025-04-12 141709](https://github.com/user-attachments/assets/1f3f9958-0137-4cb1-a778-f2316ee1deb0)
 
 ### Result:
+After executing the program, the visitor data was successfully segmented into age groups. A bar chart was generated to visualize the number of visitors in each age category.
